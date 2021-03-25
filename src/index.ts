@@ -25,6 +25,4 @@ function init()
 }
 
 
-document.addEventListener('DOMContentLoaded',function(init) {
-    console.log("DOM fully loaded and parsed");
-  });
+document.addEventListener('DOMContentLoaded',init);
