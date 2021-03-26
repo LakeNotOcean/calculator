@@ -1,4 +1,4 @@
-import  "./calcEnums";
+import  {calcOp,action} from "./calcEnums";
 
 
 interface Button
@@ -21,7 +21,7 @@ class calcNumb
 
     }
     
-    makeNumbFrac():void
+    private makeNumbFrac():void
     {
         if (this.#isFrac)
             return;
@@ -30,6 +30,11 @@ class calcNumb
     }
     addDigit(digit:string):void
     {
+        if (digit==".")
+        {
+            this.makeNumbFrac();
+            return;
+        }
         if (this.#stringValue=="0")
         {
             if (digit=="0")
@@ -73,10 +78,10 @@ class calcNumb
 }
 
 
-const add:Function=(a:string, b:string):string => String(Number(a)+Number(b));
-const subtract:Function=(a:string,b:string):string=> String(Number(a)-Number(b));
-const divide:Function=(a:string,b:string):string=>String(Number(a)/Number(b));
-const multipy:Function=(a:string,b:string):string=>String(Number(a)*Number(b));
+const add:Function=(a:number, b:number):string => String(a+b);
+const subtract:Function=(a:number,b:number):string=> String(a-b);
+const divide:Function=(a:number,b:number):string=>String(a/b);
+const multipy:Function=(a:number,b:number):string=>String(a*b);
 
 
 class Calculator
@@ -102,13 +107,17 @@ class Calculator
 
     public onClickListener(button:Button):void
     {
+        console.log("Кнопка с типом ",button.type);
         switch(button.type)
         {
             case action.Number:
                 this.pushNumber(button.value);
+                this.updateDisplay();
                 break;
             case  action.Operator:
                 this.pushOperator(button.value);
+                this.updateDisplay();
+                break;
             case action.Polarity:
                 this.changePolarity();
                 break;
@@ -117,6 +126,7 @@ class Calculator
                 break;
             case action.Result:
                 this.calcResult(); 
+                break;
             default:
                 throw new Error("Тип кнопки не определен");
         }
@@ -132,9 +142,9 @@ class Calculator
         if (this.#isCurrVisible==false || this.#currOp==calcOp.None)
         {
             this.#onDisplay=this.#prevValue.stringValue;
-            return;
         }
-        this.#onDisplay=this.#prevValue.stringValue+" "+this.#currOp+" "+this.#currValue.stringValue;
+        else
+            this.#onDisplay=this.#prevValue.stringValue+" "+this.#currOp+" "+this.#currValue.stringValue;
         this.#displayUpdateFunc(this.#onDisplay);
     }
 
@@ -153,20 +163,22 @@ class Calculator
     }
 
     private calcResult():void
-    {       
+    { 
+        if (this.#currOp==calcOp.None)
+            return;      
         switch(this.#currOp)
         {
             case calcOp.Plus:
-                this.#prevValue.changeValue(add(this.#prevValue,this.#currValue));
+                this.#prevValue.changeValue(add(this.#prevValue.numberValue,this.#currValue.numberValue));
                 break;
             case calcOp.Minus:
-                this.#prevValue.changeValue(subtract(this.#prevValue,this.#currValue));
+                this.#prevValue.changeValue(subtract(this.#prevValue.numberValue,this.#currValue.numberValue));
                 break;
             case calcOp.Mult:
-                this.#prevValue.changeValue(multipy(this.#prevValue,this.#currValue));
+                this.#prevValue.changeValue(multipy(this.#prevValue.numberValue,this.#currValue.numberValue));
                 break;
             case calcOp.Div:
-                this.#prevValue.changeValue(divide(this.#prevValue,this.#currValue));
+                this.#prevValue.changeValue(divide(this.#prevValue.numberValue,this.#currValue.numberValue));
                 break;
             default:
                 throw new Error("Невозможно выполнить операцию");
@@ -181,7 +193,11 @@ class Calculator
         if (this.#currOp==calcOp.None) // {numb1}
             this.#prevValue.addDigit(value);
         else // {numb1 op numb2}
-            this.#currValue.addDigit(value);    
+            this.#currValue.addDigit(value);  
+        if (value==".")
+            console.log("point is pushed");
+        else
+            console.log("number is pushed");
     }
 
     private pushOperator(op:string):void

@@ -17,7 +17,8 @@ function init()
     const handleCalcBtnClick=(e:Event)=>
     {
         const el=<HTMLButtonElement>e.currentTarget;
-        const type=el.type; const value=el.value;
+        const {type,value} =el.dataset;
+        console.log(type,value);
         calc.onClickListener({type, value});
     }
     calcBtns.forEach(btn => btn.addEventListener('click', handleCalcBtnClick));

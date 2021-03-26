@@ -1,4 +1,4 @@
-enum calcOp
+export const enum calcOp
 {
     Plus="+",
     Minus="-",
@@ -7,7 +7,7 @@ enum calcOp
     None="N/A"
     
 }
-enum action
+export const enum action
 {   
     Result="=",
     Number="numb",
