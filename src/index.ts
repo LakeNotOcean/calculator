@@ -7,7 +7,7 @@ function init()
     console.log("init started");
     const display:HTMLParagraphElement=document.querySelector('p#display')!!;
     const calc=new Calculator();
-    const calcBtns=document.querySelectorAll('.calcButton');
+    const calcBtns=document.querySelectorAll('.button');
 
     const handleDisplayUpdate = (val: string) => {
         display.innerText = val ? val : '0';

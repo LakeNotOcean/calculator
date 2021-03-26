@@ -10,44 +10,62 @@
     transform: translate(-50%, -50%);
     border-radius: 25px;
     position: absolute;
-    background-color: black;
+    background-color: #2E3036;
 }
 
 .display{
+    width: 15rem;
+    overflow-x: scroll;
     color: white;
     margin:5%;
     text-align: right;
     font-family: serif;
     font-size: larger;
+    line-height: normal;
 }
 
-.buttons{
-    border-radius: 5px;
-    left: 5px;
-    top: 5px;
-    border:0;
+.buttons {
     background-color: rgb(70, 81, 105);
-    text-align: center;
-    color:white;
+    padding: 4px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.button {
+    cursor: pointer;
+    width: 60px;
+    height: 50px;
     font-size: larger;
-}
-
-
-.calcButton{
+    text-align: center;
     border-radius: 5px;
-    background-color:rgb(51, 50, 50);
-    color:white;
-    border:0;
-    margin:2px;
-    size: 2px;
-    padding:0.8rem;
+    margin: 4px;
+    background-color: rgb(51, 50, 50);
+    border: none; 
+    padding: 12px 20px; 
+    outline: none; 
 }
 
-.calcButton11,.calcButton12,.calcButton13,.calcButton14{
-    color:tomato;
+
+.button:hover {
+    background-color: rgb(79, 78, 78);
 }
 
-.calcButton0,.calcButton17{
-    color:turquoise;
+.button:active {
+    background-color: rgb(34, 34, 34);
 }
 
+.button__number {
+    color: white;
+}
+
+.button__operator {
+    color: tomato;
+}
+
+.button__tech {
+    color: turquoise;
+    width: 128px;
+}

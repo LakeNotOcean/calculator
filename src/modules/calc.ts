@@ -84,6 +84,7 @@ const divide:Function=(a:number,b:number):string=>String(a/b);
 const multipy:Function=(a:number,b:number):string=>String(a*b);
 
 
+
 class Calculator
 {
     
